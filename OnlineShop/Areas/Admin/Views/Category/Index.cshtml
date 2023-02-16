@@ -1,0 +1,69 @@
+﻿@model List<Model.EF.Category>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section header{
+    List Category
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+        
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>MetaTitle</th>
+                        <th>Image</th>
+                        <th>Description</th>
+                        <th>CreatedDate</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>MetaTitle</th>
+                        <th>Image</th>
+                        <th>Description</th>
+                        <th>CreatedDate</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.ID">
+                            <td></td>
+                            <td>@item.ID</td>
+                            <td>@item.Title</td>
+                            <td>@item.MetaTitle</td>
+                            <td><img href="@item.Images" alt="@item.MetaTitle"></td>
+                            <td>@item.Description</td>
+                            <td>@item.CreatedDate</td>
+                            <td>
+                                <a href="/Admin/User/Edit/@item.ID">Edit </a> |
+
+                                @Ajax.ActionLink("Delete", "Delete", new { @id = item.ID }, new AjaxOptions
+                           {
+                               Confirm = "Bạn có muốn xóa?",
+                               OnComplete = "$('#row_" + item.ID + "').remove()",
+                               HttpMethod = "Delete"
+                           })
+                        </tr>
+                    }
+                </tbody>
+            </table>
+          
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿@model PagedList.IPagedList<Model.EF.User>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Quản lí người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Danh sách người dùng
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "User", FormMethod.Get))
+        {
+            <div class="row">
+                <div class=" col-lg-12">
+                    <div class="col-md-4">
+                        <input type="text" name="searchString" />
+                    </div>
+
+                    <div class="col-md-4">
+                        <button type="submit">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        }
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>UserName</th>
+                        <th>Name</th>
+                        <th>Mail</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Sex</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>UserName</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.UserName">
+                            <td></td>
+                            <td>@item.UserName</td>
+                            <td>@item.Name</td>
+                            <td>@item.Email</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Address</td>
+                            <td></td>
+                            <td>
+                            
+                                @Html.ActionLink("Edit","Edit/" + item.ID , "User")|
+
+                                @Ajax.ActionLink("Delete", "Delete", new { @id = item.ID }, new AjaxOptions
+                           {
+                               Confirm = "Bạn có muốn xóa?",
+                               OnComplete = "$('#row_" + item.ID + "').remove()",
+                               HttpMethod = "Delete"
+                           })
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+    </div>
+</div>

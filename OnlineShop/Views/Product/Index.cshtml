@@ -1,0 +1,86 @@
+﻿
+@model PagedList.IPagedList<Model.EF.Product>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.pagination li {
+        display: inline;
+    }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+            ul.pagination li a.active {
+                background-color: black;
+                color: white;
+            }
+
+            ul.pagination li a:hover:not(.active) {
+                background-color: red;
+            }
+</style>
+<!-- New Arrivals -->
+<div class="new_arrivals" style="margin-top:5%">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="section_title new_arrivals_title">
+                    <h2>Product</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="product-grid"
+                     data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+
+                    <!-- Product 1 -->
+                    @foreach (var item in Model)
+                    {
+                        <div class="product-item men">
+                            <div class="product discount product_filter">
+                                <div class="product_image">
+                                    <img src="images/product_1.png" alt="">
+                                </div>
+                                <div class="favorite favorite_left"></div>
+                                <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center">
+                                    <span>-$20</span>
+                                </div>
+                                <div class="product_info">
+                                    <h6 class="product_name">
+                                        <a href="/san-pham/@item.MetaTitle">
+                                            @item.Name
+                                        </a>
+                                    </h6>
+                                    <div class="product_price">$@item.Price></div>
+                                </div>
+                            </div>
+                            <div class="red_button add_to_cart_button">
+                                <a href="/them-gio-hang?productID=@item.ID&quantity=1">add to cart</a>
+                            </div>
+                        </div>
+                    }
+                    <!--Phaan trang -->
+
+                </div>
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            </div>
+        </div>
+    </div>
+</div>
