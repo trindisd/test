@@ -33,5 +33,7 @@ namespace Model.Dao
         {
             return db.Products.ToList();
         }
+      
     }
+
 }

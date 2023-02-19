@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\OnlineShop",
+    "\\OnlineShop\\Areas",
+    "\\OnlineShop\\Areas\\Admin",
+    "\\OnlineShop\\Areas\\Admin\\Views",
+    "\\OnlineShop\\Areas\\Admin\\Views\\ProductCategory"
+  ],
+  "SelectedNode": "\\OnlineShop\\Areas\\Admin\\Views\\ProductCategory\\Index.cshtml",
+  "PreviewInSolutionExplorer": false
+}

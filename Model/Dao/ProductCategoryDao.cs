@@ -16,7 +16,8 @@ namespace Model.Dao
         }
         public List<ProductCategory> ListAll()
         {
-            return db.ProductCategories.Where(x => x.Status == true).OrderBy(x => x.Status).ToList();
+            return db.ProductCategories.Where(x => x.Status == true).OrderBy(x => x.CreatedDate).ToList();
         }
+     
     }
 }

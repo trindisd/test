@@ -1,0 +1,73 @@
+﻿@model PagedList.IPagedList<Model.EF.Product>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+@section header{
+    List Product
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Created Date</th>
+
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Created Date</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @{ var i = 0;}
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.ID">
+                            <td>@(i++)</td>
+                            <td>@item.ID</td>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>
+                            <td>@item.Price</td>
+                            <td>@item.CreatedDate</td>
+                            <td>
+                                <a href="/Admin/User/Edit/@item.ID">Edit </a> |
+
+                                @Ajax.ActionLink("Delete", "Delete", new { @id = item.ID }, new AjaxOptions
+                           {
+                               Confirm = "Bạn có muốn xóa?",
+                               OnComplete = "$('#row_" + item.ID + "').remove()",
+                               HttpMethod = "Delete"
+                           })
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+    </div>
+</div>
